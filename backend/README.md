@@ -1,63 +1,61 @@
-# Product Manager — API (backend)
+# Product Manager — REST API
 
-API REST de un product-manager de gestión comercial. Construida como pieza de portafolio
-para demostrar un stack empresarial moderno de extremo a extremo.
+REST API for a product management dashboard. Built as a portfolio piece to showcase a modern enterprise backend stack end-to-end.
 
 ## Stack
 
 - **Java 21** · **Spring Boot 4** · **Spring Security 7**
-- **Spring Data JPA** (Hibernate) con **Specifications** para filtros dinámicos
-- **JWT** (jjwt) — autenticación stateless con roles (`ADMIN` / `VIEWER`)
-- **Liquibase** — esquema versionado, agnóstico de base de datos
-- **H2** (desarrollo, sin Docker) y **PostgreSQL** (producción)
-- **JUnit 5** — tests de integración
-- Manejo de errores centralizado, validación de entrada y CORS configurable
+- **Spring Data JPA** (Hibernate) with **Specifications** for dynamic filtering
+- **JWT** (jjwt) — stateless authentication with roles (`ADMIN` / `VIEWER`)
+- **Liquibase** — versioned, database-agnostic schema migrations
+- **H2** (development, no Docker needed) and **PostgreSQL** (production)
+- **JUnit 5** — integration tests
+- Centralised error handling, input validation and configurable CORS
 
-## Arranque rápido (sin Docker, 1 comando)
+## Quick start (no Docker required)
 
 ```bash
 ./mvnw spring-boot:run
 ```
 
-Levanta en `http://localhost:8080` con base de datos H2 en memoria y datos de ejemplo
-(48 productos + 2 usuarios). Consola H2 en `http://localhost:8080/h2-console`.
+Starts on `http://localhost:8080` with an in-memory H2 database and seed data (48 products + 2 users). H2 console available at `http://localhost:8080/h2-console`.
 
-### Con PostgreSQL (producción)
+### With PostgreSQL (production-like)
 
 ```bash
-docker compose up -d                       # arranca Postgres
+docker compose up -d
 ./mvnw spring-boot:run -Dspring-boot.run.profiles=postgres
 ```
 
-## Usuarios de ejemplo
+## Demo credentials
 
-| Usuario  | Contraseña  | Rol    | Permisos               |
-|----------|-------------|--------|------------------------|
-| `admin`  | `admin123`  | ADMIN  | Lectura + escritura    |
-| `viewer` | `viewer123` | VIEWER | Solo lectura           |
+| Username | Password   | Role   | Access              |
+|----------|------------|--------|---------------------|
+| `admin`  | `admin123` | ADMIN  | Read + write        |
+| `viewer` | `viewer123`| VIEWER | Read-only           |
 
 ## Endpoints
 
-| Método | Ruta                         | Rol      | Descripción                          |
-|--------|------------------------------|----------|--------------------------------------|
-| POST   | `/api/auth/login`            | público  | Devuelve un JWT                      |
-| GET    | `/api/products`              | cualquiera autenticado | Listado paginado + filtros (`search`, `category`, `active`, `sort`) |
-| GET    | `/api/products/{id}`         | autenticado | Detalle                           |
-| GET    | `/api/products/dashboard`    | autenticado | Métricas agregadas                |
-| POST   | `/api/products`              | ADMIN    | Crear                                |
-| PUT    | `/api/products/{id}`         | ADMIN    | Actualizar                           |
-| DELETE | `/api/products/{id}`         | ADMIN    | Eliminar                             |
+| Method | Path                      | Role        | Description                                                     |
+|--------|---------------------------|-------------|-----------------------------------------------------------------|
+| POST   | `/api/auth/login`         | public      | Returns a signed JWT                                            |
+| GET    | `/api/products`           | authenticated | Paginated list with filters (`search`, `category`, `active`, `sort`) |
+| GET    | `/api/products/{id}`      | authenticated | Product detail                                                  |
+| GET    | `/api/products/dashboard` | authenticated | Aggregated metrics                                              |
+| POST   | `/api/products`           | ADMIN       | Create product                                                  |
+| PUT    | `/api/products/{id}`      | ADMIN       | Update product                                                  |
+| DELETE | `/api/products/{id}`      | ADMIN       | Delete product                                                  |
 
-Ejemplos listos para usar en [`requests.http`](requests.http).
+Ready-to-use request examples in [`requests.http`](requests.http).
 
-### Ejemplo con curl
+### curl example
 
 ```bash
 TOKEN=$(curl -s -X POST http://localhost:8080/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"username":"admin","password":"admin123"}' | jq -r .token)
 
-curl "http://localhost:8080/api/products?size=5&category=Electrónica" \
+curl "http://localhost:8080/api/products?size=5&category=Electronics" \
   -H "Authorization: Bearer $TOKEN"
 ```
 
@@ -67,19 +65,17 @@ curl "http://localhost:8080/api/products?size=5&category=Electrónica" \
 ./mvnw test
 ```
 
-11 tests que cubren las dos capas críticas:
+11 tests covering two critical layers:
 
-- **`ProductServiceTest`** — lógica de negocio: alta, lectura, SKU duplicado, no encontrado, búsqueda con filtros y agregados del dashboard.
-- **`SecurityIntegrationTest`** (MockMvc) — seguridad de extremo a extremo: login + JWT, credenciales inválidas (401), acceso sin token (401), `VIEWER` sin permiso de escritura (403) y `ADMIN` autorizado (201).
+- **`ProductServiceTest`** — business logic: create, read, duplicate SKU, not found, search with filters and dashboard aggregates.
+- **`SecurityIntegrationTest`** (MockMvc) — end-to-end security: login + JWT, invalid credentials (401), missing token (401), `VIEWER` write attempt (403) and `ADMIN` authorised create (201).
 
-## Arquitectura
+## Architecture
 
-Paquetes organizados por **feature** (`auth`, `product`, `user`, `security`, `common`):
+Packages organised by **feature** (`auth`, `product`, `user`, `security`, `common`):
 
-- `security/` — `JwtService`, `JwtAuthenticationFilter`, `SecurityConfig`, entry point 401.
-- `product/` — entidad, repositorio (`JpaSpecificationExecutor`), specifications, servicio, controlador, DTOs.
-- `common/` — `PageResponse`, `ApiError`, excepciones y `@RestControllerAdvice` global.
+- `security/` — `JwtService`, `JwtAuthenticationFilter`, `SecurityConfig`, custom 401 entry point.
+- `product/` — entity, repository (`JpaSpecificationExecutor`), specifications, service, controller, DTOs.
+- `common/` — `PageResponse`, `ApiError`, custom exceptions and `@RestControllerAdvice`.
 
-Principios aplicados: capas separadas (controlador → servicio → repositorio), DTOs
-inmutables (`record`), esquema gobernado por Liquibase (Hibernate en modo `validate`),
-seguridad por método (`@PreAuthorize`) y respuestas de error consistentes.
+Key principles: layered architecture (controller → service → repository), immutable DTOs (`record`), Liquibase-owned schema (Hibernate in `validate` mode), method-level security (`@PreAuthorize`) and consistent error responses.

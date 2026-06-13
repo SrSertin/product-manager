@@ -1,39 +1,44 @@
 # Product Manager
 
-Panel de administración (product-manager) de gestión comercial, construido como pieza de
-portafolio para demostrar un stack **full-stack empresarial** de extremo a extremo.
+A full-stack product management dashboard built as a portfolio piece to showcase an end-to-end enterprise stack.
 
-> Caso de uso universal: gestión de catálogo de productos con control de stock,
-> autenticación por roles y un dashboard de métricas — el tipo de aplicación interna
-> que necesita prácticamente cualquier empresa.
+> Universal use case: product catalogue management with stock control, role-based authentication and a metrics dashboard — the kind of internal tool virtually every business needs.
 
 ## Stack
 
-| Capa      | Tecnología |
-|-----------|------------|
-| Backend   | Java 21 · Spring Boot 4 · Spring Security 7 (JWT) · Spring Data JPA · Liquibase · PostgreSQL / H2 |
-| Frontend  | Angular 20 · Angular Material *(en construcción)* |
-| Calidad   | JUnit 5 · validación · manejo de errores centralizado · CORS |
+| Layer    | Technology |
+|----------|------------|
+| Backend  | Java 21 · Spring Boot 4 · Spring Security 7 (JWT) · Spring Data JPA · Liquibase · PostgreSQL / H2 |
+| Frontend | Angular · Angular Material |
+| Quality  | JUnit 5 · MockMvc integration tests · Bean Validation · centralised error handling |
 
-## Estructura
+## Structure
 
 ```
 product-manager/
-├── backend/     API REST (Spring Boot)  ← ✅ funcional y probado
-└── frontend/    SPA (Angular)           ← 🚧 siguiente fase
+├── backend/    REST API (Spring Boot)  ← ✅ fully functional & tested
+└── frontend/   SPA (Angular)           ← ✅ fully functional
 ```
 
-## Funcionalidades
+## Features
 
-- 🔐 **Autenticación JWT** con roles `ADMIN` (lectura/escritura) y `VIEWER` (solo lectura).
-- 📦 **CRUD de productos** con búsqueda, filtros por categoría/estado, paginación y ordenación.
-- 📊 **Dashboard** con métricas agregadas (total, activos, stock bajo, valor de inventario, reparto por categoría).
-- ✅ Validación de entrada, errores HTTP consistentes y control de acceso por método.
+- 🔐 **JWT authentication** with `ADMIN` (read/write) and `VIEWER` (read-only) roles.
+- 📦 **Product CRUD** with real-time search, category/status filters, pagination and column sorting.
+- 📊 **Dashboard** with aggregated KPIs (total, active, low stock, inventory value) and a category breakdown chart.
+- ✅ Input validation, consistent HTTP error responses and method-level access control.
 
-## Cómo ejecutar
+## Getting started
 
-Ver [`backend/README.md`](backend/README.md). Arranque en un comando (sin Docker):
+See [`backend/README.md`](backend/README.md). Runs with a single command — no Docker required:
 
 ```bash
 cd backend && ./mvnw spring-boot:run
 ```
+
+Then start the frontend:
+
+```bash
+cd frontend && npm install && npx -p @angular/cli@19 ng serve
+```
+
+Open `http://localhost:4200` and log in with `admin / admin123`.
