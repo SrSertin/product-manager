@@ -67,6 +67,11 @@ curl "http://localhost:8080/api/products?size=5&category=Electrónica" \
 ./mvnw test
 ```
 
+11 tests que cubren las dos capas críticas:
+
+- **`ProductServiceTest`** — lógica de negocio: alta, lectura, SKU duplicado, no encontrado, búsqueda con filtros y agregados del dashboard.
+- **`SecurityIntegrationTest`** (MockMvc) — seguridad de extremo a extremo: login + JWT, credenciales inválidas (401), acceso sin token (401), `VIEWER` sin permiso de escritura (403) y `ADMIN` autorizado (201).
+
 ## Arquitectura
 
 Paquetes organizados por **feature** (`auth`, `product`, `user`, `security`, `common`):
