@@ -56,32 +56,57 @@ import { AuthService } from '../core/services/auth.service';
     .sidenav-container { height: 100vh; }
 
     .sidenav {
-      width: 220px;
-      background: #1a237e;
+      width: 240px;
+      background: #0f1b4c;
       color: white;
+      border-right: none;
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 20px 16px 16px;
+      padding: 22px 20px 18px;
       font-size: 1.1rem;
-      font-weight: 600;
+      font-weight: 700;
       color: white;
-      border-bottom: 1px solid rgba(255,255,255,.15);
-      margin-bottom: 8px;
+      letter-spacing: .3px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      margin-bottom: 12px;
+    }
+
+    .brand mat-icon {
+      background: rgba(255,255,255,.12);
+      border-radius: 8px;
+      padding: 4px;
+      font-size: 20px;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    mat-nav-list {
+      padding: 0 10px;
     }
 
     mat-nav-list a {
-      color: rgba(255,255,255,.8);
       border-radius: 8px;
-      margin: 2px 8px;
+      margin: 2px 0;
+      height: 44px;
+      --mdc-list-list-item-container-color: transparent;
+      --mdc-list-list-item-label-text-color: rgba(255,255,255,.65);
+      --mdc-list-list-item-leading-icon-color: rgba(255,255,255,.5);
+      --mdc-list-list-item-hover-state-layer-color: rgba(255,255,255,.06);
+      --mdc-list-list-item-focus-state-layer-color: rgba(255,255,255,.08);
+      --mdc-list-list-item-hover-label-text-color: rgba(255,255,255,.9);
     }
 
     mat-nav-list a.active-link {
-      background: rgba(255,255,255,.15);
-      color: white;
+      background: rgba(255,255,255,.12);
+      --mdc-list-list-item-label-text-color: white;
+      --mdc-list-list-item-leading-icon-color: white;
     }
 
     .spacer { flex: 1; }
