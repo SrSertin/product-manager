@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: 001-create-app-user
-      author: backoffice-demo
+      author: product-manager
       changes:
         - createTable:
             tableName: app_user
@@ -35,7 +35,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 002-create-product
-      author: backoffice-demo
+      author: product-manager
       changes:
         - createTable:
             tableName: product

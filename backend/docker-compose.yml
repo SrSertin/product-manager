@@ -1,15 +1,15 @@
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: backoffice-postgres
+    container_name: product-manager-postgres
     environment:
-      POSTGRES_DB: backoffice
-      POSTGRES_USER: backoffice
-      POSTGRES_PASSWORD: backoffice
+      POSTGRES_DB: product-manager
+      POSTGRES_USER: product-manager
+      POSTGRES_PASSWORD: product-manager
     ports:
       - "5432:5432"
     volumes:
-      - backoffice_pgdata:/var/lib/postgresql/data
+      - product-manager_pgdata:/var/lib/postgresql/data
 
 volumes:
-  backoffice_pgdata:
+  product-manager_pgdata:

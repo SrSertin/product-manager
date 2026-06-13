@@ -1,4 +1,4 @@
-### Backoffice Demo API — ejemplos de peticiones
+### Product Manager API — ejemplos de peticiones
 ### Compatible con la extensión "REST Client" de VS Code o IntelliJ HTTP client.
 
 @host = http://localhost:8080

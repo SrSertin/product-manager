@@ -20,7 +20,7 @@ import { AuthService } from '../core/services/auth.service';
       <mat-sidenav mode="side" opened class="sidenav">
         <div class="brand">
           <mat-icon>storefront</mat-icon>
-          <span>Backoffice</span>
+          <span>Product Manager</span>
         </div>
         <mat-nav-list>
           <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">

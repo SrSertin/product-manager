@@ -25,7 +25,7 @@ import { AuthService } from '../../../core/services/auth.service';
           <div class="logo">
             <mat-icon>storefront</mat-icon>
           </div>
-          <mat-card-title>Backoffice Demo</mat-card-title>
+          <mat-card-title>Product Manager</mat-card-title>
           <mat-card-subtitle>Inicia sesión para continuar</mat-card-subtitle>
         </mat-card-header>
 

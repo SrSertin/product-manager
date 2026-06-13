@@ -1,6 +1,6 @@
-# Backoffice Demo
+# Product Manager
 
-Panel de administración (backoffice) de gestión comercial, construido como pieza de
+Panel de administración (product-manager) de gestión comercial, construido como pieza de
 portafolio para demostrar un stack **full-stack empresarial** de extremo a extremo.
 
 > Caso de uso universal: gestión de catálogo de productos con control de stock,
@@ -18,7 +18,7 @@ portafolio para demostrar un stack **full-stack empresarial** de extremo a extre
 ## Estructura
 
 ```
-backoffice-demo/
+product-manager/
 ├── backend/     API REST (Spring Boot)  ← ✅ funcional y probado
 └── frontend/    SPA (Angular)           ← 🚧 siguiente fase
 ```

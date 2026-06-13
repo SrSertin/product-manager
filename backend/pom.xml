@@ -8,10 +8,10 @@
 		<version>4.1.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.backofficedemo</groupId>
-	<artifactId>backoffice-demo-api</artifactId>
+	<groupId>com.product-managerdemo</groupId>
+	<artifactId>product-manager-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>backoffice-demo-api</name>
+	<name>product-manager-api</name>
 	<description/>
 	<url/>
 	<licenses>

@@ -1,6 +1,6 @@
-# Backoffice Demo — API (backend)
+# Product Manager — API (backend)
 
-API REST de un backoffice de gestión comercial. Construida como pieza de portafolio
+API REST de un product-manager de gestión comercial. Construida como pieza de portafolio
 para demostrar un stack empresarial moderno de extremo a extremo.
 
 ## Stack

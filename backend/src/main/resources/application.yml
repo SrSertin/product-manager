@@ -1,10 +1,10 @@
 spring:
   application:
-    name: backoffice-demo-api
+    name: product-manager-api
 
   # Default profile: H2 in-memory database — runs instantly, no Docker required.
   datasource:
-    url: jdbc:h2:mem:backoffice;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+    url: jdbc:h2:mem:product-manager;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
     driver-class-name: org.h2.Driver
     username: sa
     password: ""
@@ -48,10 +48,10 @@ spring:
     activate:
       on-profile: postgres
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/backoffice}
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/product-manager}
     driver-class-name: org.postgresql.Driver
-    username: ${DB_USERNAME:backoffice}
-    password: ${DB_PASSWORD:backoffice}
+    username: ${DB_USERNAME:product-manager}
+    password: ${DB_PASSWORD:product-manager}
   h2:
     console:
       enabled: false
