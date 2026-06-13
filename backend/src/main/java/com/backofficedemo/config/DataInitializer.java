@@ -20,7 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class DataInitializer {
 
     private static final List<String> CATEGORIES =
-            List.of("Electrónica", "Hogar", "Deporte", "Oficina", "Juguetería");
+            List.of("Electronics", "Home", "Sports", "Office", "Toys");
 
     @Bean
     CommandLineRunner seedData(UserRepository userRepository,
@@ -59,7 +59,7 @@ public class DataInitializer {
             String category = CATEGORIES.get(rnd.nextInt(CATEGORIES.size()));
             productRepository.save(Product.builder()
                     .sku("SKU-%04d".formatted(i))
-                    .name(category + " artículo " + i)
+                    .name(category + " item " + i)
                     .category(category)
                     .price(BigDecimal.valueOf(rnd.nextInt(500, 50_000) / 100.0))
                     .stock(rnd.nextInt(0, 200))

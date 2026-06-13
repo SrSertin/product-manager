@@ -20,36 +20,37 @@ import { DashboardStats } from '../../core/models/product.model';
   template: `
     <h1 class="page-title">Dashboard</h1>
 
+
     @if (loading) {
       <div class="center"><mat-spinner /></div>
     } @else if (stats) {
       <div class="kpi-grid">
         <mat-card class="kpi-card">
-          <mat-icon class="kpi-icon blue">inventory_2</mat-icon>
+          <mat-icon class="kpi-icon blue">grid_view</mat-icon>
           <div class="kpi-value">{{ stats.totalProducts }}</div>
-          <div class="kpi-label">Total productos</div>
+          <div class="kpi-label">Total Products</div>
         </mat-card>
         <mat-card class="kpi-card">
-          <mat-icon class="kpi-icon green">check_circle</mat-icon>
+          <mat-icon class="kpi-icon green">task_alt</mat-icon>
           <div class="kpi-value">{{ stats.activeProducts }}</div>
-          <div class="kpi-label">Activos</div>
+          <div class="kpi-label">Active</div>
         </mat-card>
         <mat-card class="kpi-card">
-          <mat-icon class="kpi-icon orange">warning</mat-icon>
+          <mat-icon class="kpi-icon orange">report_problem</mat-icon>
           <div class="kpi-value">{{ stats.lowStockProducts }}</div>
-          <div class="kpi-label">Stock bajo (&lt;10)</div>
+          <div class="kpi-label">Low Stock (&lt;10)</div>
         </mat-card>
         <mat-card class="kpi-card">
-          <mat-icon class="kpi-icon purple">euro</mat-icon>
+          <mat-icon class="kpi-icon purple">payments</mat-icon>
           <div class="kpi-value">{{ stats.inventoryValue | number:'1.0-0' }} €</div>
-          <div class="kpi-label">Valor inventario</div>
+          <div class="kpi-label">Inventory Value</div>
         </mat-card>
       </div>
 
       <div class="charts-row">
         <mat-card class="chart-card">
           <mat-card-header>
-            <mat-card-title>Productos por categoría</mat-card-title>
+            <mat-card-title>Products by Category</mat-card-title>
           </mat-card-header>
           <mat-card-content>
             @for (cat of stats.productsByCategory; track cat.category) {
@@ -66,14 +67,14 @@ import { DashboardStats } from '../../core/models/product.model';
 
         <mat-card class="quick-actions-card">
           <mat-card-header>
-            <mat-card-title>Acciones rápidas</mat-card-title>
+            <mat-card-title>Quick Actions</mat-card-title>
           </mat-card-header>
           <mat-card-content>
             <a mat-stroked-button color="primary" routerLink="/products" class="action-btn">
-              <mat-icon>list</mat-icon> Ver todos los productos
+              <mat-icon>view_list</mat-icon> View all products
             </a>
             <a mat-flat-button color="primary" routerLink="/products/new" class="action-btn">
-              <mat-icon>add</mat-icon> Nuevo producto
+              <mat-icon>add_circle_outline</mat-icon> New product
             </a>
           </mat-card-content>
         </mat-card>

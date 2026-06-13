@@ -13,7 +13,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ProductService } from '../../../core/services/product.service';
 
-const CATEGORIES = ['Electrónica', 'Hogar', 'Deporte', 'Oficina', 'Juguetería'];
+const CATEGORIES = ['Electronics', 'Home', 'Sports', 'Office', 'Toys'];
 
 @Component({
   selector: 'app-product-form',
@@ -28,8 +28,8 @@ const CATEGORIES = ['Electrónica', 'Hogar', 'Deporte', 'Oficina', 'Juguetería'
     <div class="form-wrapper">
       <mat-card class="form-card">
         <mat-card-header>
-          <mat-card-title>{{ isEdit ? 'Editar producto' : 'Nuevo producto' }}</mat-card-title>
-          <mat-card-subtitle>{{ isEdit ? 'Modifica los datos del producto' : 'Rellena el formulario para crear un producto' }}</mat-card-subtitle>
+          <mat-card-title>{{ isEdit ? 'Edit product' : 'New product' }}</mat-card-title>
+          <mat-card-subtitle>{{ isEdit ? 'Update product details' : 'Fill in the form to create a product' }}</mat-card-subtitle>
         </mat-card-header>
 
         <mat-card-content>
@@ -42,44 +42,44 @@ const CATEGORIES = ['Electrónica', 'Hogar', 'Deporte', 'Oficina', 'Juguetería'
                   <mat-label>SKU</mat-label>
                   <input matInput formControlName="sku" placeholder="Ej: ELEC-001">
                   @if (form.get('sku')?.hasError('required') && form.get('sku')?.touched) {
-                    <mat-error>El SKU es obligatorio</mat-error>
+                    <mat-error>SKU is required</mat-error>
                   }
                   @if (form.get('sku')?.hasError('maxlength') && form.get('sku')?.touched) {
-                    <mat-error>Máximo 50 caracteres</mat-error>
+                    <mat-error>Maximum 50 characters</mat-error>
                   }
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                  <mat-label>Categoría</mat-label>
+                  <mat-label>Category</mat-label>
                   <mat-select formControlName="category">
                     @for (cat of categories; track cat) {
                       <mat-option [value]="cat">{{ cat }}</mat-option>
                     }
                   </mat-select>
                   @if (form.get('category')?.hasError('required') && form.get('category')?.touched) {
-                    <mat-error>La categoría es obligatoria</mat-error>
+                    <mat-error>Category is required</mat-error>
                   }
                 </mat-form-field>
               </div>
 
               <mat-form-field appearance="outline" class="full">
-                <mat-label>Nombre</mat-label>
-                <input matInput formControlName="name" placeholder="Nombre del producto">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name" placeholder="Product name">
                 @if (form.get('name')?.hasError('required') && form.get('name')?.touched) {
-                  <mat-error>El nombre es obligatorio</mat-error>
+                  <mat-error>Name is required</mat-error>
                 }
               </mat-form-field>
 
               <div class="form-row">
                 <mat-form-field appearance="outline">
-                  <mat-label>Precio (€)</mat-label>
+                  <mat-label>Price (€)</mat-label>
                   <input matInput type="number" formControlName="price" min="0" step="0.01">
                   <mat-icon matSuffix>euro</mat-icon>
                   @if (form.get('price')?.hasError('required') && form.get('price')?.touched) {
-                    <mat-error>El precio es obligatorio</mat-error>
+                    <mat-error>Price is required</mat-error>
                   }
                   @if (form.get('price')?.hasError('min') && form.get('price')?.touched) {
-                    <mat-error>El precio no puede ser negativo</mat-error>
+                    <mat-error>Price cannot be negative</mat-error>
                   }
                 </mat-form-field>
 
@@ -88,25 +88,25 @@ const CATEGORIES = ['Electrónica', 'Hogar', 'Deporte', 'Oficina', 'Juguetería'
                   <input matInput type="number" formControlName="stock" min="0">
                   <mat-icon matSuffix>inventory</mat-icon>
                   @if (form.get('stock')?.hasError('required') && form.get('stock')?.touched) {
-                    <mat-error>El stock es obligatorio</mat-error>
+                    <mat-error>Stock is required</mat-error>
                   }
                   @if (form.get('stock')?.hasError('min') && form.get('stock')?.touched) {
-                    <mat-error>El stock no puede ser negativo</mat-error>
+                    <mat-error>Stock cannot be negative</mat-error>
                   }
                 </mat-form-field>
               </div>
 
               <mat-slide-toggle formControlName="active" color="primary">
-                Producto activo
+                Active
               </mat-slide-toggle>
 
               <div class="form-actions">
-                <a mat-stroked-button routerLink="/products">Cancelar</a>
+                <a mat-stroked-button routerLink="/products">Cancel</a>
                 <button mat-flat-button color="primary" type="submit" [disabled]="saving">
                   @if (saving) {
                     <mat-spinner diameter="20" />
                   } @else {
-                    {{ isEdit ? 'Guardar cambios' : 'Crear producto' }}
+                    {{ isEdit ? 'Save changes' : 'Create product' }}
                   }
                 </button>
               </div>
@@ -196,14 +196,14 @@ export class ProductFormComponent implements OnInit {
     op.subscribe({
       next: () => {
         this.snackBar.open(
-          this.isEdit ? 'Producto actualizado' : 'Producto creado',
-          'Cerrar', { duration: 3000 }
+          this.isEdit ? 'Product updated' : 'Product created',
+          'Close', { duration: 3000 }
         );
         this.router.navigate(['/products']);
       },
       error: (err) => {
-        const msg = err.error?.message || 'Error al guardar';
-        this.snackBar.open(msg, 'Cerrar', { duration: 4000 });
+        const msg = err.error?.message || 'Error saving product';
+        this.snackBar.open(msg, 'Close', { duration: 4000 });
         this.saving = false;
       }
     });

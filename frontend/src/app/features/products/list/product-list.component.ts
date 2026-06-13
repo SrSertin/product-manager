@@ -21,7 +21,7 @@ import { ProductService } from '../../../core/services/product.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { Product, PageResponse, ProductFilter } from '../../../core/models/product.model';
 
-const CATEGORIES = ['Electrónica', 'Hogar', 'Deporte', 'Oficina', 'Juguetería'];
+const CATEGORIES = ['Electronics', 'Home', 'Sports', 'Office', 'Toys'];
 const DISPLAYED_COLUMNS = ['sku', 'name', 'category', 'price', 'stock', 'active', 'actions'];
 
 @Component({
@@ -37,10 +37,10 @@ const DISPLAYED_COLUMNS = ['sku', 'name', 'category', 'price', 'stock', 'active'
   ],
   template: `
     <div class="list-header">
-      <h1 class="page-title">Productos</h1>
+      <h1 class="page-title">Products</h1>
       @if (auth.isAdmin()) {
         <a mat-flat-button color="primary" routerLink="/products/new">
-          <mat-icon>add</mat-icon> Nuevo producto
+          <mat-icon>add</mat-icon> New product
         </a>
       }
     </div>
@@ -48,15 +48,15 @@ const DISPLAYED_COLUMNS = ['sku', 'name', 'category', 'price', 'stock', 'active'
     <!-- Filtros -->
     <div class="filters-bar" [formGroup]="filterForm">
       <mat-form-field appearance="outline" class="filter-search">
-        <mat-label>Buscar por nombre o SKU</mat-label>
+        <mat-label>Search by name or SKU</mat-label>
         <input matInput formControlName="search">
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="filter-cat">
-        <mat-label>Categoría</mat-label>
+        <mat-label>Category</mat-label>
         <mat-select formControlName="category">
-          <mat-option value="">Todas</mat-option>
+          <mat-option value="">All</mat-option>
           @for (cat of categories; track cat) {
             <mat-option [value]="cat">{{ cat }}</mat-option>
           }
@@ -64,16 +64,16 @@ const DISPLAYED_COLUMNS = ['sku', 'name', 'category', 'price', 'stock', 'active'
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="filter-active">
-        <mat-label>Estado</mat-label>
+        <mat-label>Status</mat-label>
         <mat-select formControlName="active">
-          <mat-option value="">Todos</mat-option>
-          <mat-option [value]="true">Activos</mat-option>
-          <mat-option [value]="false">Inactivos</mat-option>
+          <mat-option value="">All</mat-option>
+          <mat-option [value]="true">Active</mat-option>
+          <mat-option [value]="false">Inactive</mat-option>
         </mat-select>
       </mat-form-field>
 
       <button mat-stroked-button (click)="resetFilters()">
-        <mat-icon>clear</mat-icon> Limpiar
+        <mat-icon>clear</mat-icon> Clear
       </button>
     </div>
 
@@ -90,19 +90,19 @@ const DISPLAYED_COLUMNS = ['sku', 'name', 'category', 'price', 'stock', 'active'
         </ng-container>
 
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
           <td mat-cell *matCellDef="let p">{{ p.name }}</td>
         </ng-container>
 
         <ng-container matColumnDef="category">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Categoría</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
           <td mat-cell *matCellDef="let p">
             <span class="cat-chip">{{ p.category }}</span>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="price">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
           <td mat-cell *matCellDef="let p">{{ p.price | number:'1.2-2' }} €</td>
         </ng-container>
 
@@ -114,7 +114,7 @@ const DISPLAYED_COLUMNS = ['sku', 'name', 'category', 'price', 'stock', 'active'
         </ng-container>
 
         <ng-container matColumnDef="active">
-          <th mat-header-cell *matHeaderCellDef>Activo</th>
+          <th mat-header-cell *matHeaderCellDef>Active</th>
           <td mat-cell *matCellDef="let p">
             <mat-icon [class.active]="p.active" [class.inactive]="!p.active">
               {{ p.active ? 'check_circle' : 'cancel' }}
@@ -125,11 +125,11 @@ const DISPLAYED_COLUMNS = ['sku', 'name', 'category', 'price', 'stock', 'active'
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let p">
-            <a mat-icon-button [routerLink]="['/products', p.id, 'edit']" matTooltip="Editar"
+            <a mat-icon-button [routerLink]="['/products', p.id, 'edit']" matTooltip="Edit"
                *ngIf="auth.isAdmin()">
               <mat-icon>edit</mat-icon>
             </a>
-            <button mat-icon-button color="warn" matTooltip="Eliminar"
+            <button mat-icon-button color="warn" matTooltip="Delete"
                     (click)="confirmDelete(p)" *ngIf="auth.isAdmin()">
               <mat-icon>delete</mat-icon>
             </button>
@@ -141,7 +141,7 @@ const DISPLAYED_COLUMNS = ['sku', 'name', 'category', 'price', 'stock', 'active'
 
         <tr class="mat-row" *matNoDataRow>
           <td class="mat-cell no-data" [attr.colspan]="columns.length">
-            No hay productos para los filtros seleccionados.
+            No products match the selected filters.
           </td>
         </tr>
       </table>
@@ -256,13 +256,13 @@ export class ProductListComponent implements OnInit {
   resetFilters()        { this.filterForm.reset({ search: '', category: '', active: '' }); }
 
   confirmDelete(product: Product) {
-    if (!confirm(`¿Eliminar "${product.name}"?`)) return;
+    if (!confirm(`Delete "${product.name}"?`)) return;
     this.productService.delete(product.id).subscribe({
       next: () => {
-        this.snackBar.open('Producto eliminado', 'Cerrar', { duration: 3000 });
+        this.snackBar.open('Product deleted', 'Close', { duration: 3000 });
         this.load();
       },
-      error: () => this.snackBar.open('Error al eliminar', 'Cerrar', { duration: 3000 })
+      error: () => this.snackBar.open('Error deleting product', 'Close', { duration: 3000 })
     });
   }
 }

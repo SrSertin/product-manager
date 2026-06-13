@@ -26,28 +26,28 @@ import { AuthService } from '../../../core/services/auth.service';
             <mat-icon>storefront</mat-icon>
           </div>
           <mat-card-title>Product Manager</mat-card-title>
-          <mat-card-subtitle>Inicia sesión para continuar</mat-card-subtitle>
+          <mat-card-subtitle>Sign in to continue</mat-card-subtitle>
         </mat-card-header>
 
         <mat-card-content>
           <form [formGroup]="form" (ngSubmit)="submit()">
             <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Usuario</mat-label>
+              <mat-label>Username</mat-label>
               <input matInput formControlName="username" autocomplete="username">
               <mat-icon matSuffix>person</mat-icon>
               @if (form.get('username')?.hasError('required') && form.get('username')?.touched) {
-                <mat-error>El usuario es obligatorio</mat-error>
+                <mat-error>Username is required</mat-error>
               }
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Contraseña</mat-label>
+              <mat-label>Password</mat-label>
               <input matInput [type]="hidePass ? 'password' : 'text'" formControlName="password" autocomplete="current-password">
               <button mat-icon-button matSuffix type="button" (click)="hidePass = !hidePass">
                 <mat-icon>{{ hidePass ? 'visibility_off' : 'visibility' }}</mat-icon>
               </button>
               @if (form.get('password')?.hasError('required') && form.get('password')?.touched) {
-                <mat-error>La contraseña es obligatoria</mat-error>
+                <mat-error>Password is required</mat-error>
               }
             </mat-form-field>
 
@@ -59,7 +59,7 @@ import { AuthService } from '../../../core/services/auth.service';
               @if (loading) {
                 <mat-spinner diameter="20" />
               } @else {
-                Entrar
+                Sign in
               }
             </button>
           </form>
@@ -147,7 +147,7 @@ export class LoginComponent {
     this.auth.login({ username: username!, password: password! }).subscribe({
       next: () => this.router.navigate(['/dashboard']),
       error: () => {
-        this.errorMsg = 'Usuario o contraseña incorrectos';
+        this.errorMsg = 'Invalid username or password';
         this.loading  = false;
       }
     });
