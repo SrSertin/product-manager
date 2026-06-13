@@ -1,0 +1,57 @@
+spring:
+  application:
+    name: backoffice-demo-api
+
+  # Default profile: H2 in-memory database — runs instantly, no Docker required.
+  datasource:
+    url: jdbc:h2:mem:backoffice;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+
+  jpa:
+    hibernate:
+      ddl-auto: validate        # Schema is owned by Liquibase, never by Hibernate.
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+  h2:
+    console:
+      enabled: true             # http://localhost:8080/h2-console (dev only)
+      path: /h2-console
+
+server:
+  port: 8080
+
+# Application-specific settings
+app:
+  jwt:
+    # Base64-encoded 256-bit secret. Override in production via APP_JWT_SECRET env var.
+    secret: ${APP_JWT_SECRET:c2VjcmV0LWtleS1mb3ItYmFja29mZmljZS1kZW1vLWNoYW5nZS1tZS1pbi1wcm9k}
+    expiration-minutes: 120
+  cors:
+    allowed-origins: ${APP_CORS_ORIGINS:http://localhost:4200}
+
+logging:
+  level:
+    org.springframework.security: INFO
+
+---
+# PostgreSQL profile: production-like. Activate with -Dspring.profiles.active=postgres
+spring:
+  config:
+    activate:
+      on-profile: postgres
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/backoffice}
+    driver-class-name: org.postgresql.Driver
+    username: ${DB_USERNAME:backoffice}
+    password: ${DB_PASSWORD:backoffice}
+  h2:
+    console:
+      enabled: false

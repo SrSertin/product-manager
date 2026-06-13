@@ -1,0 +1,19 @@
+# Build output
+**/target/
+**/dist/
+**/node_modules/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# OS
+.DS_Store
+
+# Logs / env
+*.log
+.env

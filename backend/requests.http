@@ -1,0 +1,61 @@
+### Backoffice Demo API — ejemplos de peticiones
+### Compatible con la extensión "REST Client" de VS Code o IntelliJ HTTP client.
+
+@host = http://localhost:8080
+
+### 1. Login (admin) — copia el token de la respuesta
+# @name login
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+### Guarda el token de la respuesta anterior
+@token = {{login.response.body.token}}
+
+### 2. Listar productos (paginado + filtros)
+GET {{host}}/api/products?page=0&size=10&sort=price,desc&category=Electrónica
+Authorization: Bearer {{token}}
+
+### 3. Buscar por nombre o SKU
+GET {{host}}/api/products?search=SKU-0001
+Authorization: Bearer {{token}}
+
+### 4. Dashboard (agregados)
+GET {{host}}/api/products/dashboard
+Authorization: Bearer {{token}}
+
+### 5. Crear producto (solo ADMIN)
+POST {{host}}/api/products
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "sku": "DEMO-100",
+  "name": "Producto de prueba",
+  "category": "Oficina",
+  "price": 149.95,
+  "stock": 30,
+  "active": true
+}
+
+### 6. Actualizar producto
+PUT {{host}}/api/products/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "sku": "DEMO-100",
+  "name": "Producto actualizado",
+  "category": "Oficina",
+  "price": 159.95,
+  "stock": 25,
+  "active": true
+}
+
+### 7. Eliminar producto
+DELETE {{host}}/api/products/1
+Authorization: Bearer {{token}}
